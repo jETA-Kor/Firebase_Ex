@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="//www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+        <script src="../firebase/init.js"></script>
+        <script>
+            $(document).ready(function() {
+                $("#signIn").hide();
+                $("#authorized").hide();
+                $("#error").hide();
+            });
+            
+            function signUp() {
+                var id = $("#su_id").val();
+                var pw = $("#su_pw").val();
+                var cf = $("#su_cf").val();
+                
+                if(pw != cf) {
+                    alert("Password does not match the confirm password.");
+                    return;
+                }
+                
+                firebase.auth().createUserWithEmailAndPassword(id, pw)
+                        .then(function() {
+                            $("#signUp").hide();
+                            $("#signIn").show();
+                        })
+                        .catch(function(e) {
+                            lastWork = "signUp";
+                            $("#error #errmsg").html(e.message);
+                            $("#error").show();
+                            $("#signUp").hide();
+                            return;
+                        });
+            }
+            
+            function signIn() {
+                var id = $("#si_id").val();
+                var pw = $("#si_pw").val();
+                firebase.auth().signInWithEmailAndPassword(id, pw)
+                        .then(function() {
+                            $("#signIn").hide();
+                            $("#authorized").show();
+                        })
+                        .catch(function(e) {
+                            lastWork = "signIn";
+                            $("#error #errmsg").html(e.message);
+                            $("#error").show();
+                            $("#signIn").hide();
+                            return;
+                        });
+            }
+            
+            function back() {
+                $("#" + lastWork).show();
+                $("#error").hide();
+            }
+        </script>
+    </head>
+    <body>
+        <div id="signUp">
+            <label for="su_id">ID: </label><input type="email" id="su_id" /><br />
+            <label for="su_pw">PW: </label><input type="password" id="su_pw" /><br />
+            <label for="su_cf">Confirm: </label><input type="password" id="su_cf" /><br />
+            <button onclick="signUp()">Sign Up</button> / <button onclick="$('#signUp').hide(); $('#signIn').show();">Sign In</button>
+        </div>
+        <div id="signIn">
+            <label for="si_id">ID: </label><input type="email" id="si_id" /><br />
+            <label for="si_pw">PW: </label><input type="password" id="si_pw" /><br />
+            <button onclick="signIn()">Sign In</button>
+        </div>
+        <div id="authorized">
+            You authorized!
+        </div>
+        <div id="error">
+            An error occurred: <span id="errmsg"></span><br />
+            <button onclick="back();">Back</button>
+        </div>
+    </body>
+</html>

@@ -5,59 +5,7 @@
         <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script src="//www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
         <script src="../firebase/init.js"></script>
-        <script>
-            $(document).ready(function() {
-                $("#signIn").hide();
-                $("#authorized").hide();
-                $("#error").hide();
-            });
-            
-            function signUp() {
-                var id = $("#su_id").val();
-                var pw = $("#su_pw").val();
-                var cf = $("#su_cf").val();
-                
-                if(pw != cf) {
-                    alert("Password does not match the confirm password.");
-                    return;
-                }
-                
-                firebase.auth().createUserWithEmailAndPassword(id, pw)
-                        .then(function() {
-                            $("#signUp").hide();
-                            $("#signIn").show();
-                        })
-                        .catch(function(e) {
-                            lastWork = "signUp";
-                            $("#error #errmsg").html(e.message);
-                            $("#error").show();
-                            $("#signUp").hide();
-                            return;
-                        });
-            }
-            
-            function signIn() {
-                var id = $("#si_id").val();
-                var pw = $("#si_pw").val();
-                firebase.auth().signInWithEmailAndPassword(id, pw)
-                        .then(function() {
-                            $("#signIn").hide();
-                            $("#authorized").show();
-                        })
-                        .catch(function(e) {
-                            lastWork = "signIn";
-                            $("#error #errmsg").html(e.message);
-                            $("#error").show();
-                            $("#signIn").hide();
-                            return;
-                        });
-            }
-            
-            function back() {
-                $("#" + lastWork).show();
-                $("#error").hide();
-            }
-        </script>
+        <script src="js/index.js"></script>
     </head>
     <body>
         <div id="signUp">

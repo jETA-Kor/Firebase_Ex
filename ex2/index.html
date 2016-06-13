@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="//www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+        <script src="../firebase/init.js"></script>
+        <script src="js/index.js"></script>
+        <style>
+            #authorized > div:nth-child(1) { font-size: 50px; }
+            #authorized img#photo { height: 50px; border-radius: 25px; vertical-align: middle; }
+        </style>
+    </head>
+    <body>
+        <div id="signIn">
+            <button onclick="signIn()">Sign In With Google</button>
+        </div>
+        <div id="authorized">
+            <div>Hello, <img id="photo" src="" /><span id="displayName"></span></div>
+            <div>
+                Email: <span id="email"></span><br />
+                RefreshToken: <span id="refreshToken"></span><br />
+                uid: <span id="uid"></span>
+            </div>
+            <div><button onclick="signOut()">Sign Out</button></div>
+        </div>
+        <div id="error">
+            An error occurred: <span id="errmsg"></span><br />
+            <button onclick="back();">Back</button>
+        </div>
+    </body>
+</html>
